@@ -1,0 +1,35 @@
+<h1> Welcome to short.com </h1>
+
+<div>
+  Please enter your URL here
+  <%= form_tag(shorten_url_home_index_path, :method => :get, :id => 'shorten_url_form') do %>
+
+      <div class="col-sm-6 col-md-6 mb-2">
+        <input type="text" id="search_bar" placeholder="Search " />
+        <button id="shorten">
+          SHORTEN
+        </button>
+      </div>
+
+      <p class="shortened_url" style="display:none">
+        Here's your shortened URL
+      </p>
+    <% end -%>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script type="text/javascript">
+  $('#shorten_url_form').submit(function(){
+    $.ajax({
+      url: '<%= shorten_url_home_index_path %>',
+      type: 'get',
+      success: function(response){
+        $('.shortened_url').show();
+      },
+      error: function(xhr){
+        $.flash('error', xhr.responseText);
+      }
+    })
+  })
+</script>
